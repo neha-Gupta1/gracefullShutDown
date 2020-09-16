@@ -22,13 +22,13 @@ func serve(ctx context.Context) (err error) {
 	))
 
 	srv := &http.Server{
-		Addr:    ":8080",
+		Addr:    ":80",
 		Handler: mux,
 	}
 
 	go func() {
 		if err = srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			log.Fatalf("listen:%+s\n", err)
+			log.Fatalf("listen: %v\n", err)
 		}
 	}()
 
@@ -45,7 +45,7 @@ func serve(ctx context.Context) (err error) {
 	}()
 
 	if err = srv.Shutdown(ctxShutDown); err != nil {
-		log.Fatalf("server Shutdown Failed:%v", err)
+		log.Fatalf("server Shutdown Failed: %v", err)
 	}
 
 	log.Printf("server exited properly")
@@ -70,6 +70,6 @@ func main() {
 	}()
 
 	if err := serve(ctx); err != nil {
-		log.Printf("failed to serve:+%v\n", err)
+		log.Printf("failed to serve: %v\n", err)
 	}
 }
